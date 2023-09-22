@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client';
 @Injectable()
 export class AppService {
 
-  async getHello(): Promise<string> {
+  async getHello(): Promise<Record<string, string>> {
     const prisma = new PrismaClient();
     const employee = await prisma.funcionarios.findMany({
       select: {
@@ -16,6 +16,6 @@ export class AppService {
       }
     })
     console.log('employee', employee)
-    return '';
+    return {message : 'Success'};
   }
 }
