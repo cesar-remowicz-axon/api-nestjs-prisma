@@ -21,6 +21,7 @@ model historico_endereco {
   odfNumber             String 
 }
 
+
 model history_pointed {
   id            Int @unique @id @default(autoincrement()) @map("R_E_C_N_O_")
   odfNumber     Int @map("ODF")
