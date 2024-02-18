@@ -1,12 +1,7 @@
-import { Controller, Post, Req } from '@nestjs/common';
+import { IApiResponse } from 'interfaces/interface.apiResponse';
+import { Controller, Post, Req, Res } from '@nestjs/common';
 import { BadgeService } from './badge.service';
 import { Request } from 'express';
-
-interface ApiResponse {
-  employee: string;
-  badge: string;
-  message: string;
-}
 
 @Controller('badge')
 export class BadgeController {
@@ -14,8 +9,8 @@ export class BadgeController {
   constructor(private readonly badgeService: BadgeService) { }
 
   @Post('employee')
-  async getEmployeeCheck(@Req() req: Request): Promise<ApiResponse> {
-    return this.badgeService.checkEmployee(req);
+  async getEmployeeCheck(@Req() req: Request): Promise<IApiResponse> {
+    return this.badgeService.employee(req);
   }
 
 }

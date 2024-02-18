@@ -1,33 +1,32 @@
-import { PrismaService } from './prisma.service';
+import { IApiResponse } from 'interfaces/interface.apiResponse';
+import { QueryExecutor } from './query.service';
 import { Injectable } from '@nestjs/common';
+import { Message } from './utils.message';
 import { Request } from 'express';
-
-interface IBadge {
-  employee: string;
-  badge: string;
-  message: string;
-  isSupervisor: boolean;
-}
 
 @Injectable()
 export class BadgeService {
 
-  constructor(private prisma: PrismaService) { };
+    async employee(req: Request): Promise<IApiResponse> {
 
-  async checkEmployee(req: Request): Promise<IBadge> {
-    const apiResponse: IBadge = req.body;
-    const { badge } = apiResponse;
-    this.prisma.historico_endereco;
-    const isEmployee = await this.prisma.funcionarios.findMany({
-      select: {
-        CRACHA: true,
-        FUNCIONARIO: true,
-      },
-      where: {
-        CRACHA: badge,
-      },
-    });
-    apiResponse.message = 'Success';
-    return apiResponse;
-  }
+        const apiResponse: IApiResponse = req.body;
+        const { badge } = apiResponse;
+        const message = new Message();
+
+        try {
+            const isEmployee = await new QueryExecutor().query({ badge });
+
+            if (isEmployee.length <= 0) {
+                apiResponse.message = message.userNotFound;
+                return apiResponse;
+            }
+
+            apiResponse.message = message.success;
+            return apiResponse;
+
+        } catch (error) {
+            apiResponse.message = message.error;
+            return apiResponse;
+        }
+    }
 }
