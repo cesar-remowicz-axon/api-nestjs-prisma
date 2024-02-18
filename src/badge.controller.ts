@@ -1,5 +1,5 @@
 import { IApiResponse } from 'interfaces/interface.apiResponse';
-import { Controller, Post, Req, Res } from '@nestjs/common';
+import { Controller, Post, Req } from '@nestjs/common';
 import { BadgeService } from './badge.service';
 import { Request } from 'express';
 

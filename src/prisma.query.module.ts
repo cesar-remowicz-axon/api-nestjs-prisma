@@ -6,4 +6,4 @@ import { Module } from '@nestjs/common';
     exports: [PrismaService]
 })
 
-export class PrismaQueryModule { }
+export class PrismaModule { }

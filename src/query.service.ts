@@ -1,42 +1,37 @@
-import { PrismaClient } from "@prisma/client";
-import { EnvVariables } from "./utils.env";
+import { PrismaService } from "./prisma.service";
 
 interface IValues {
     badge: string;
 }
 
+interface IQueryResponse {
+    employee: string;
+    badge: string;
+}
+
 export class QueryExecutor {
 
-    private prisma: PrismaClient;
-
-    constructor() {
-        this.prisma = new PrismaClient();
-    }
+    private prisma = new PrismaService();
+    constructor() { }
 
     async query(params: IValues) {
 
-        const env = new EnvVariables();
-        const { badgeEmployeeNameColumn, badgeColumn, tableBadge } = env;
+        const respose = { employee: '' }
 
-        const variables = {
-            employee: '',
+        try {
+            const x = await this.prisma.employees.findMany({ select: { badge: true, employee: true }, where: { badge: params.badge } });
+            console.log("x", x)
+
+            respose.employee = x[0].employee;
+
+            // const y = await this.prisma.history_pointed.findMany({ select: { odfNumber: true }, where: { odfNumber: 2124340 } });
+            // console.log("ye", y)
+            return [respose]
+        } catch (error) {
+            console.log("Error", error)
         }
 
-        const variablesInacess = {
-            badgeCode: badgeColumn,
-        }
-
-        const table = this.prisma[tableBadge];
-        const str = { select: { [badgeColumn]: true, [badgeEmployeeNameColumn]: true, }, where: { [badgeColumn]: params.badge } };
-        const result = await table.findMany(str);
-
-        for (const obj of result) {
-            for (const key in obj) {
-                variables.employee = key === badgeEmployeeNameColumn ? obj[key] : '';
-            }
-        }
-
-        return [variables];
+        return [respose]
     }
 
 }
