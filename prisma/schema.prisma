@@ -8,10 +8,11 @@ datasource db {
 }
 
 model funcionarios {
-  MATRIC        Int        @id @default(autoincrement())
-  CRACHA        String     @unique
-  FUNCIONARIO   String
+  R_E_C_N_O_        Int        @id @default(autoincrement()) 
+  CRACHA            String     @unique
+  FUNCIONARIO       String    
 }
+
 
 model historico_endereco {
   id      Int   @id @default(autoincrement())

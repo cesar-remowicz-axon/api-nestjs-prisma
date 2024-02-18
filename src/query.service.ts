@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-// import { PrismaService } from "./prisma.service";
+import { EnvVariables } from "./utils.env";
 
 interface IValues {
     badge: string;
@@ -7,20 +7,36 @@ interface IValues {
 
 export class QueryExecutor {
 
-    // private prisma: PrismaService;
-    // constructor(private prisma: PrismaService) { };
+    private prisma: PrismaClient;
 
-    async query(value: IValues) {
-        const prisma = new PrismaClient();
-        return await prisma.funcionarios.findMany({
-            select: {
-                CRACHA: true,
-                FUNCIONARIO: true,
-            },
-            where: {
-                CRACHA: value.badge,
-            },
-        });
+    constructor() {
+        this.prisma = new PrismaClient();
+    }
+
+    async query(params: IValues) {
+
+        const env = new EnvVariables();
+        const { badgeEmployeeNameColumn, badgeColumn, tableBadge } = env;
+
+        const variables = {
+            employee: '',
+        }
+
+        const variablesInacess = {
+            badgeCode: badgeColumn,
+        }
+
+        const table = this.prisma[tableBadge];
+        const str = { select: { [badgeColumn]: true, [badgeEmployeeNameColumn]: true, }, where: { [badgeColumn]: params.badge } };
+        const result = await table.findMany(str);
+
+        for (const obj of result) {
+            for (const key in obj) {
+                variables.employee = key === badgeEmployeeNameColumn ? obj[key] : '';
+            }
+        }
+
+        return [variables];
     }
 
 }

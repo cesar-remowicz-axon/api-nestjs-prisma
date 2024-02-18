@@ -21,7 +21,9 @@ export class BadgeService {
                 return apiResponse;
             }
 
+            const { employee } = isEmployee[0];
             apiResponse.message = message.success;
+            apiResponse.employee = employee;
             return apiResponse;
 
         } catch (error) {

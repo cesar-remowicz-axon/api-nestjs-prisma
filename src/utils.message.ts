@@ -3,7 +3,7 @@ interface IMessage {
 }
 
 export class Message implements IMessage {
-    userNotFound = 'Usuario não encotrado';
-    success = 'Concluído com sucesso';
-    error = 'Algo deu errado, tente novamente';
+    public userNotFound = 'Usuario não encotrado';
+    public success = 'Concluído com sucesso';
+    public error = 'Algo deu errado, tente novamente';
 }
