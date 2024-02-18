@@ -17,6 +17,7 @@ export class BadgeService {
   async checkEmployee(req: Request): Promise<IBadge> {
     const apiResponse: IBadge = req.body;
     const { badge } = apiResponse;
+    this.prisma.historico_endereco;
     const isEmployee = await this.prisma.funcionarios.findMany({
       select: {
         CRACHA: true,

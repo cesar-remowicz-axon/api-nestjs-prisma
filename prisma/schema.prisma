@@ -7,13 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model employee {
+model funcionarios {
   MATRIC        Int        @id @default(autoincrement())
   CRACHA        String     @unique
   FUNCIONARIO   String
 }
 
-model historyAddress {
+model historico_endereco {
   id      Int   @id @default(autoincrement())
   odfNumber             String 
 }
