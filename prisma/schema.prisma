@@ -8,23 +8,29 @@ datasource db {
 }
 
 model employees {
-  id           Int        @id @default(autoincrement()) @map("R_E_C_N_O_")
-  badge        String     @unique @map("CRACHA")
+  id           Int        @unique @id @default(autoincrement()) @map("R_E_C_N_O_")
+  badge        String     @map("CRACHA")
   employee     String     @map("FUNCIONARIO")
 
   @@map("funcionarios")
 }
 
 
-model historico_endereco {
-  id      Int   @id @default(autoincrement())
-  odfNumber             String 
+model historyAddress {
+  id                    Int       @unique @id @default(autoincrement()) @map("R_E_C_N_O")
+  odfNumber             String    @map("ODF")
+  quantity              Int       @map("QUANTIDADE")
+  status                String    @map("STATUS")
+
+  @@map("historico_endereco")
 }
 
 
 model history_pointed {
-  id            Int @unique @id @default(autoincrement()) @map("R_E_C_N_O_")
-  odfNumber     Int @map("ODF")
+  id                  Int     @unique @id @default(autoincrement()) @map("R_E_C_N_O_")
+  odfNumber           Int     @map("ODF")
+  pointedCode         Int     @map("CODAPONTA")
+  statusPointedCode   String  @map("CAMPO2")
 
   @@map("hisaponta")
 }

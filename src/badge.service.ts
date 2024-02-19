@@ -7,6 +7,8 @@ import { Request } from 'express';
 @Injectable()
 export class BadgeService {
 
+    constructor(private executor: QueryExecutor) { };
+
     async employee(req: Request): Promise<IApiResponse> {
 
         const apiResponse: IApiResponse = req.body;
@@ -14,22 +16,22 @@ export class BadgeService {
         const message = new Message();
 
         try {
-            const isEmployee = await new QueryExecutor().query({ badge });
+            const result = await this.executor.query({ badge });
 
-            if (isEmployee.length <= 0) {
+            if (!result) {
                 apiResponse.message = message.userNotFound;
                 return apiResponse;
             }
 
-            const { employee } = isEmployee[0];
+            const { employee } = result[0];
             apiResponse.message = message.success;
             apiResponse.employee = employee;
             return apiResponse;
 
         } catch (error) {
+            console.log("An error occurred in BadgeService.employee:", error)
             apiResponse.message = message.error;
             return apiResponse;
         }
     }
 }
- 

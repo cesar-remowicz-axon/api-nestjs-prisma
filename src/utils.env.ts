@@ -2,8 +2,10 @@ export class EnvVariables {
 
     constructor() { };
 
-    public readonly badgeColumn = process.env['BADGE_COLUMN'];
-    public readonly badgeEmployeeNameColumn = process.env['BADGE_EMPLOYEE_NAME_COLUMN'];
-    public readonly tableBadge = process.env['BADGE_TABLE'];
+    private env = process.env;
+
+    public readonly mode = this.env['MODE'];
+    public readonly alocationTable = this.env['ALOCATION_TABLE'];
+    public readonly odfNumberColumn = this.env['ODF_NUMBER_COLUMN'];
 
 }

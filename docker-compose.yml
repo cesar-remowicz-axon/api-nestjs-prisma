@@ -1,21 +1,6 @@
 version: '3'
 
 services:
-  # ui:
-  #   container_name: ui
-  #   networks:
-  #    shared-networks:
-  #       ipv4_address: 192.168.101.81
-  #   build:
-  #     context: ./ui
-  #     dockerfile: dockerfile
-  #   ports:
-  #     - "4173:4173"
-  #   env_file:
-  #     - ./ui/.env
-  #   volumes:
-  #     - shared-data:/server
-
   server:
     container_name: server
     networks:
